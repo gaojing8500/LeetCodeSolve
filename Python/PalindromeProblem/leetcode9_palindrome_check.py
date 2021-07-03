@@ -1,7 +1,7 @@
 '''
 Author: your name
 Date: 2021-04-06 20:41:50
-LastEditTime: 2021-04-19 21:01:48
+LastEditTime: 2021-05-10 20:21:23
 LastEditors: Please set LastEditors
 Description: In User Settings Edit
 FilePath: /LeetCodeSolve/Python/PalindromeProblem/palindrome_check.py
@@ -52,11 +52,42 @@ class ParlindromeCheck(object):
             end = end-1
 
         return True
-            
-        
+
+    def palindrome_check_center_method(self,input_data:Union[str,int]):
+        """[summary] 采用中心对称原理向两边扩散
+
+        Args:
+            input_data (Union[str,int]): [description]
+        """ 
+        if isinstance(input_data,str):
+            self.check_center_method(input_data)
+        else:
+            transfor_str = str(input_data)
+            self.check_center_method(transfor_str)
+
+    def check_center_method(self,input_data:str):
+        input_data_length = len(input_data)
+        if input_data_length % 2 == 0:
+            #判断长度是奇数还是偶数
+            index_ptr = input_data_length / 2
+        else: 
+            center_ptr = int((input_data_length-1)/ 2)
+            i = 1
+            j = 1
+            for index in range(input_data_length -(center_ptr+1)):
+                center_ptr_after = center_ptr + i
+                center_ptr_before = center_ptr - j
+                i = i+1
+                j = j+1
+                if input_data[center_ptr_after] == input_data[center_ptr_before]:
+                    return True
+                else:
+                    return False
+                
+    
 
 if __name__ == '__main__':
     model = ParlindromeCheck()
     print(model)
-    print(model.palindrome_check("121"))
+    print(model.palindrome_check_center_method("121"))
     
