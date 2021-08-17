@@ -1,12 +1,3 @@
-'''
-Author: your name
-Date: 2021-07-03 17:11:22
-LastEditTime: 2021-07-03 17:23:03
-LastEditors: Please set LastEditors
-Description: In User Settings Edit
-FilePath: /LeetCodeSolve/Python/leetcode-100-hot/leetcode143_sort_list_problem.py
-'''
-
 
 from ..base import LeetCodeBase
 
