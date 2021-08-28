@@ -1,12 +1,14 @@
-class TrieNode(object):
-    def __init__(self, value=None):
-        self.__children = {}
-        self.__value = value
+# class TrieNode(object):
+#     def __init__(self, value=None):
+#         self.trie = TrieNode()
+#         self.value = value
+import collections
 
 
 class Trie(object):
     def __init__(self):
-        self.node = TrieNode()
+        self.child = collections.defaultdict(dict)
+        self.return_result = []
 
     def insert(self, words):
         """
@@ -14,11 +16,12 @@ class Trie(object):
         :type word: str
         :rtype: None
         """
-        for word in words:
-            if self.node.__children is None:
-                child = TrieNode(word)
-                self.node.__children[word] = child
-        return self.node
+        newnode = self.child
+        for token in words:
+            if token not in newnode.keys():
+                newnode[token]= collections.defaultdict(dict)
+            newnode = newnode[token]
+        newnode["is_word"] = "is_word"
 
     def search(self, word):
         """
@@ -26,6 +29,23 @@ class Trie(object):
         :type word: str
         :rtype: bool
         """
+        nownode = self.child
+        for token in word:
+            if token in nownode.keys():
+                nownode = nownode[token]
+            else:
+                return False
+        self.test_search(nownode)
+        print(self.return_result)
+
+    def test_search(self,nownode):
+        for index in nownode.keys():
+            if index != "is_word":
+                self.return_result.append(index)
+                self.test_search(nownode[index])
+            else:
+                self.return_result.append("###")
+        # return "is_word" in nownode.keys()
 
     def startsWith(self, prefix):
         """
@@ -33,3 +53,10 @@ class Trie(object):
         :type prefix: str
         :rtype: bool
         """
+        nownode = self.child
+        for token in prefix:
+            if token in nownode.keys():
+                newnode = newnode[token]
+            else:
+                return False
+        return True
